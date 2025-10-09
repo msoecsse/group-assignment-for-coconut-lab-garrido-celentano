@@ -1,5 +1,5 @@
 package coconuts;
 
 public interface Observer {
-    // public void update(){}
+    public default void update(){}
 }

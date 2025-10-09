@@ -8,9 +8,11 @@ import javafx.scene.image.Image;
 public class Crab extends HittableIslandObject {
     private static final int WIDTH = 50; // assumption: height and width are the same
     private static final Image crabImage = new Image("file:images/crab-1.png");
+    private static OhCoconutsGameManager game;
 
     public Crab(OhCoconutsGameManager game, int skyHeight, int islandWidth) {
         super(game, islandWidth / 2, skyHeight, WIDTH, crabImage);
+        this.game = game;
     }
 
     @Override
@@ -20,7 +22,7 @@ public class Crab extends HittableIslandObject {
 
     // Captures the crab crawling sideways
     public void crawl(int offset) {
-        if ((x+offset)+WIDTH >600 || x+offset<0 ){
+        if ((x+offset)+WIDTH > game.getWidth() || x+offset<0 ){
             return;
         }
 

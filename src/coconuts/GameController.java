@@ -18,16 +18,17 @@ public class GameController {
     private Timeline coconutTimeline;
     private boolean started = false;
 
+
     @FXML
-    private Pane gamePane;
+    private  Pane gamePane;
     @FXML
-    private Pane theBeach;
+    private  Pane theBeach;
     private OhCoconutsGameManager theGame;
 
     @FXML
     public void initialize() {
-        theGame = new OhCoconutsGameManager((int) (gamePane.getPrefHeight() - theBeach.getPrefHeight()),
-                (int) (gamePane.getPrefWidth()), gamePane);
+        theGame = new OhCoconutsGameManager((int)(gamePane.getPrefHeight() - theBeach.getPrefHeight()),
+                (int)theBeach.getPrefWidth(), gamePane);
 
         gamePane.setFocusTraversable(true);
 
