@@ -66,6 +66,14 @@ public class OhCoconutsGameManager {
         }
         gameTick++;
     }
+    public void tryShootLaser() {
+        if ( theCrab != null) {
+            LaserBeam l = new LaserBeam(this, theCrab.y+ 25, theCrab.x + 25);
+            registerObject(l);
+            gamePane.getChildren().add(l.getImageView());
+        }
+        gameTick++;
+    }
 
     public Crab getCrab() {
         return theCrab;
