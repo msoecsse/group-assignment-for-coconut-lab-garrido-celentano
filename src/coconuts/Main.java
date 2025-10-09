@@ -17,9 +17,18 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("coconuts.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("coconuts.fxml"));
+        Parent root = loader.load();
         primaryStage.setTitle("A Lonely Beach");
-        primaryStage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
         primaryStage.show();
+
+        // Set up key controls
+        GameController.setupControls(scene);
+
+        // Ensure the game pane has focus to receive key events
+        GameController controller = loader.getController();
+        controller.requestFocusForGamePane();
     }
 }
