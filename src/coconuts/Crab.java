@@ -20,6 +20,10 @@ public class Crab extends HittableIslandObject {
 
     // Captures the crab crawling sideways
     public void crawl(int offset) {
+        if ((x+offset)+WIDTH >600 || x+offset<0 ){
+            return;
+        }
+
         x += offset;
         display();
     }
