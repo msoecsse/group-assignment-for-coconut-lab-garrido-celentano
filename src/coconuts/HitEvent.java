@@ -11,7 +11,7 @@ import java.util.List;
 // This captures the Subject side of the Observer pattern; observers of the hit event will take action
 //   to process that event
 // This is a domain class; do not introduce JavaFX or other GUI components here
-public class HitEvent implements Subject{
+public class HitEvent extends AbstractSubject{
     private List<Observer> observers;
 
     public HitEvent() {
@@ -30,6 +30,5 @@ public class HitEvent implements Subject{
 
     @Override
     public void notifyObservers() {
-
     }
 }

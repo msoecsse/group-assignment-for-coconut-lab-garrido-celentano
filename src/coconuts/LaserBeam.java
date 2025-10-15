@@ -20,4 +20,12 @@ public class LaserBeam extends IslandObject {
     public void step() {
         y -= 10;
     }
+
+    private boolean checkCollisionWithCoconut(){
+        return false;
+    }
+
+    private void changeScore(int scoreDelta){
+        ScoreboardData.changeDestroyedCoconuts(scoreDelta);
+    }
 }

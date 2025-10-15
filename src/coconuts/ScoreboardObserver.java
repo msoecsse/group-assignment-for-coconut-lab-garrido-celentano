@@ -1,6 +1,17 @@
 package coconuts;
 
-public class ScoreboardObserver implements Observer{
+public class ScoreboardObserver extends AbstractObserver{
+
     @Override
-    public void update() { }
+    public void update() {
+        Scoreboard.update(getBeachedCoconuts(),getDestroyedCoconuts());
+    }
+
+    private int getBeachedCoconuts(){
+        return ScoreboardData.getBeachedCoconuts();
+    }
+
+    private int getDestroyedCoconuts(){
+        return ScoreboardData.getDestroyedCoconuts();
+    }
 }

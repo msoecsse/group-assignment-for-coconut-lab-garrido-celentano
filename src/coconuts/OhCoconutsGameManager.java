@@ -61,6 +61,7 @@ public class OhCoconutsGameManager {
         if (gameTick % DROP_INTERVAL == 0 && theCrab != null) {
             coconutsInFlight += 1;
             Coconut c = new Coconut(this, (int) (Math.random() * width));
+
             registerObject(c);
             gamePane.getChildren().add(c.getImageView());
         }

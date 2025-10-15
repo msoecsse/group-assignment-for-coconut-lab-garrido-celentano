@@ -25,7 +25,6 @@ public class Crab extends HittableIslandObject {
         if ((x+offset)+WIDTH > game.getWidth() || x+offset<0 ){
             return;
         }
-
         x += offset;
         display();
     }

@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 // Represents the falling object that can kill crabs. If hit by a laser, the coconut disappears
 // This is a domain class; other than Image, do not introduce JavaFX or other GUI components here
-public class Coconut extends HittableIslandObject {
+public class Coconut extends HittableIslandObject implements Observer{
     private static final int WIDTH = 50;
     private static final Image coconutImage = new Image("file:images/coco-1.png");
 
@@ -15,5 +15,24 @@ public class Coconut extends HittableIslandObject {
     @Override
     public void step() {
         y += 5;
+    }
+
+
+
+    private boolean checkCollisionWithBeachAndHandle(){
+        if (x< 50){
+            delete();
+            ScoreboardData.changeBeachCoconuts(1);
+            return true;
+        }
+        return false;
+    }
+
+    private void delete(){
+
+    }
+
+    private boolean changeScore(){
+        return false;
     }
 }

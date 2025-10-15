@@ -23,12 +23,5 @@ public class Main extends Application {
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
-
-        // Set up key controls
-        GameController.setupControls(scene);
-
-        // Ensure the game pane has focus to receive key events
-        GameController controller = loader.getController();
-        controller.requestFocusForGamePane();
     }
 }

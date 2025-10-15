@@ -1,37 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml/1" alignment="center" hgap="10" vgap="10"
-          xmlns="http://javafx.com/javafx/8.0.141" fx:controller="coconuts.GameController">
+<GridPane alignment="center" hgap="10" onKeyPressed="#onKeyPressed" vgap="10" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="coconuts.GameController">
     <columnConstraints>
-        <ColumnConstraints/>
+        <ColumnConstraints />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints/>
+        <RowConstraints />
     </rowConstraints>
     <children>
         <VBox fx:id="skyAndSand" prefHeight="600.0" prefWidth="600.0">
             <children>
-                <Pane id="theGame" fx:id="gamePane" prefHeight="550.0" prefWidth="600.0"
-                      style="-fx-background-color: linear-gradient(to bottom right, derive(skyblue, 20%), derive(skyblue, -40%));">
+                <Pane id="theGame" fx:id="gamePane" prefHeight="550.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to bottom right, derive(skyblue, 20%), derive(skyblue, -40%));">
                     <children>
-                        <Label layoutX="50.0" layoutY="550.0" scaleZ="2.0" text="Press arrow keys to move coconut"
-                               textFill="darkred" translateZ="1.0">
+                        <Label layoutX="50.0" layoutY="550.0" scaleZ="2.0" text="Press arrow keys to move coconut" textFill="darkred" translateZ="1.0">
                             <font>
-                                <Font name="Poor Richard" size="18.0"/>
+                                <Font name="Poor Richard" size="18.0" />
                             </font>
                         </Label>
+                  <VBox layoutX="14.0" layoutY="21.0" prefHeight="39.0" prefWidth="100.0" spacing="10.0" style="-fx-background-radius: 6; -fx-background-color: rgba(255,255,255,0.85); -fx-padding: 6; -fx-border-color: #ddd; -fx-border-radius: 6;">
+                     <children>
+                        <Text fx:id="coconutsDestroyed" strokeType="OUTSIDE" strokeWidth="0.0" text="Coconuts destroyed: ">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="coconutsBeached" strokeType="OUTSIDE" strokeWidth="0.0" text="Coconuts Beached: ">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                     </children>
+                     <effect>
+                        <ColorAdjust />
+                     </effect>
+                  </VBox>
                     </children>
                 </Pane>
-                <Pane id="theBeach" fx:id="theBeach" prefHeight="50.0" prefWidth="600.0"
-                      style="-fx-background-color: linear-gradient(to bottom right, derive(tan, 30%), derive(tan, -50%));">
+                <Pane id="theBeach" fx:id="theBeach" prefHeight="50.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to bottom right, derive(tan, 30%), derive(tan, -50%));">
                 </Pane>
             </children>
         </VBox>
