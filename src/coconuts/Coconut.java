@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 public class Coconut extends HittableIslandObject implements Observer{
     private static final int WIDTH = 50;
     private static final Image coconutImage = new Image("file:images/coco-1.png");
+    public int y;
 
     public Coconut(OhCoconutsGameManager game, int x) {
         super(game, x, 0, WIDTH, coconutImage);
@@ -17,16 +18,7 @@ public class Coconut extends HittableIslandObject implements Observer{
         y += 5;
     }
 
-
-
-    private boolean checkCollisionWithBeachAndHandle(){
-        if (x< 50){
-            delete();
-            ScoreboardData.changeBeachCoconuts(1);
-            return true;
-        }
-        return false;
-    }
+    public int getY(){return y;}
 
     private void delete(){
 

@@ -4,6 +4,7 @@ package coconuts;
 
 import javafx.scene.layout.Pane;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -12,6 +13,8 @@ public class OhCoconutsGameManager {
     private final Collection<IslandObject> allObjects = new LinkedList<>();
     private final Collection<HittableIslandObject> hittableIslandSubjects = new LinkedList<>();
     private final Collection<IslandObject> scheduledForRemoval = new LinkedList<>();
+    private final ArrayList<LaserBeam> laserBeams = new ArrayList<>();
+    private final ArrayList<Coconut> coconuts = new ArrayList<>();
     private final int height, width;
     private final int DROP_INTERVAL = 10;
     private final int MAX_TIME = 100;
@@ -61,7 +64,7 @@ public class OhCoconutsGameManager {
         if (gameTick % DROP_INTERVAL == 0 && theCrab != null) {
             coconutsInFlight += 1;
             Coconut c = new Coconut(this, (int) (Math.random() * width));
-
+            coconuts.add(c);
             registerObject(c);
             gamePane.getChildren().add(c.getImageView());
         }
@@ -70,6 +73,7 @@ public class OhCoconutsGameManager {
     public void tryShootLaser() {
         if ( theCrab != null) {
             LaserBeam l = new LaserBeam(this, theCrab.y+ 25, theCrab.x + 25);
+            laserBeams.add(l);
             registerObject(l);
             gamePane.getChildren().add(l.getImageView());
         }
@@ -110,6 +114,22 @@ public class OhCoconutsGameManager {
             }
         }
         scheduledForRemoval.clear();
+    }
+
+    private Coconut coconutBeachCollision() {
+        for (int i = 0; i < coconuts.size(); i++) {
+            if (coconuts.get(i).getY() <= 50){
+
+            }
+        }
+    }
+
+    private LaserBeam laserCoconutCollision(){
+
+    }
+
+    private Coconut coconutCrabCollision(){
+
     }
 
     public void scheduleForDeletion(IslandObject islandObject) {
