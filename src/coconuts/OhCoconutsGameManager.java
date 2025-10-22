@@ -7,14 +7,13 @@ import javafx.scene.layout.Pane;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 // This class manages the game, including tracking all island objects and detecting when they hit
 public class OhCoconutsGameManager {
     private final Collection<IslandObject> allObjects = new LinkedList<>();
     private final Collection<HittableIslandObject> hittableIslandSubjects = new LinkedList<>();
     private final Collection<IslandObject> scheduledForRemoval = new LinkedList<>();
-    private final ArrayList<LaserBeam> laserBeams = new ArrayList<>();
-    private final ArrayList<Coconut> coconuts = new ArrayList<>();
     private final int height, width;
     private final int DROP_INTERVAL = 10;
     private final int MAX_TIME = 100;
@@ -24,6 +23,7 @@ public class OhCoconutsGameManager {
     /* game play */
     private int coconutsInFlight = 0;
     private int gameTick = 0;
+    private HitEvent hitEvent = new HitEvent();
 
     public OhCoconutsGameManager(int height, int width, Pane gamePane) {
         this.height = height;
@@ -38,6 +38,8 @@ public class OhCoconutsGameManager {
         registerObject(theBeach);
         if (theBeach.getImageView() != null)
             System.out.println("Unexpected image view for beach");
+
+        hitEvent.attach(new ScoreboardObserver());
     }
 
     private void registerObject(IslandObject object) {
@@ -64,7 +66,6 @@ public class OhCoconutsGameManager {
         if (gameTick % DROP_INTERVAL == 0 && theCrab != null) {
             coconutsInFlight += 1;
             Coconut c = new Coconut(this, (int) (Math.random() * width));
-            coconuts.add(c);
             registerObject(c);
             gamePane.getChildren().add(c.getImageView());
         }
@@ -73,7 +74,6 @@ public class OhCoconutsGameManager {
     public void tryShootLaser() {
         if ( theCrab != null) {
             LaserBeam l = new LaserBeam(this, theCrab.y+ 25, theCrab.x + 25);
-            laserBeams.add(l);
             registerObject(l);
             gamePane.getChildren().add(l.getImageView());
         }
@@ -85,6 +85,7 @@ public class OhCoconutsGameManager {
     }
 
     public void killCrab() {
+        theCrab.getImageView().setVisible(false);
         theCrab = null;
     }
 
@@ -100,12 +101,20 @@ public class OhCoconutsGameManager {
         for (IslandObject thisObj : allObjects) {
             for (HittableIslandObject hittableObject : hittableIslandSubjects) {
                 if (thisObj.canHit(hittableObject) && thisObj.isTouching(hittableObject)) {
-                    // TODO: add code here to process the hit
+                    if (thisObj instanceof Crab && hittableObject instanceof Coconut) {
+                        ScoreboardData.changeHealth(-5);}
+                    else if (thisObj instanceof LaserBeam && hittableObject instanceof Coconut){
+                        ScoreboardData.changeDestroyedCoconuts(1);}
+                    else if (thisObj instanceof Beach && hittableObject instanceof Coconut){
+                        ScoreboardData.changeBeachCoconuts(1);}
+
+                    hitEvent.notifyObservers();
                     scheduledForRemoval.add(hittableObject);
                     gamePane.getChildren().remove(hittableObject.getImageView());
                 }
             }
         }
+
         // actually remove the objects as needed
         for (IslandObject thisObj : scheduledForRemoval) {
             allObjects.remove(thisObj);
@@ -114,23 +123,26 @@ public class OhCoconutsGameManager {
             }
         }
         scheduledForRemoval.clear();
-    }
+        if (ScoreboardData.getHealth() <= 0 && theCrab!=null) {
+            killCrab();
 
-    private Coconut coconutBeachCollision() {
-        for (int i = 0; i < coconuts.size(); i++) {
-            if (coconuts.get(i).getY() <= 50){
+            // Remove only lasers
+            List<IslandObject> lasersToRemove = new ArrayList<>();
+            for (IslandObject o : allObjects) {
+                if (o instanceof LaserBeam) {
+                    lasersToRemove.add(o);
+                }
+            }
 
+            for (IslandObject o : lasersToRemove) {
+                allObjects.remove(o);
+                hittableIslandSubjects.remove(o);
+                gamePane.getChildren().remove(o.getImageView());
             }
         }
     }
 
-    private LaserBeam laserCoconutCollision(){
 
-    }
-
-    private Coconut coconutCrabCollision(){
-
-    }
 
     public void scheduleForDeletion(IslandObject islandObject) {
         scheduledForRemoval.add(islandObject);

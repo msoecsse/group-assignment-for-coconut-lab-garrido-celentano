@@ -18,10 +18,16 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("coconuts.fxml"));
+
+
         Parent root = loader.load();
         primaryStage.setTitle("A Lonely Beach");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
+
+
+        GameController gameController = loader.getController();
+        Scoreboard scoreboard = new Scoreboard(gameController);
     }
 }

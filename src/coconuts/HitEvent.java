@@ -12,7 +12,7 @@ import java.util.List;
 //   to process that event
 // This is a domain class; do not introduce JavaFX or other GUI components here
 public class HitEvent extends AbstractSubject{
-    private List<Observer> observers;
+    private final List<Observer> observers;
 
     public HitEvent() {
         observers = new ArrayList<>();
@@ -30,5 +30,8 @@ public class HitEvent extends AbstractSubject{
 
     @Override
     public void notifyObservers() {
+        for(Observer o : observers){
+            o.update();
+        }
     }
 }

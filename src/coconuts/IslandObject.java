@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 // This is a domain class; do not introduce JavaFX or other GUI components here
 public abstract class IslandObject {
     protected final int width;
+    final int minimumTouchingDistance = 35;
     protected final OhCoconutsGameManager containingGame;
     protected int x, y;
     ImageView imageView = null;
@@ -38,7 +39,7 @@ public abstract class IslandObject {
     }
 
     public boolean isHittable() {
-        return false;
+        return this instanceof Crab || this instanceof Coconut || this instanceof LaserBeam;
     }
 
     protected int hittable_height() {
@@ -46,19 +47,29 @@ public abstract class IslandObject {
     }
 
     public boolean isGroundObject() {
-        return false;
+        return this instanceof Beach;
     }
 
     public boolean isFalling() {
-        return false;
+        return this instanceof Coconut;
     }
 
     public boolean canHit(IslandObject other) {
-        return false;
+        if((this instanceof Beach && other instanceof Coconut)
+                || (this instanceof Crab && other instanceof Coconut)
+                || (this instanceof LaserBeam && other instanceof Coconut)){
+            return true;
+        }return false;
     }
 
     public boolean isTouching(IslandObject other) {
-        return false;
+        if (this instanceof Beach && other instanceof Coconut && other.y >= 520){
+            return true;
+        }
+        int deltaX = Math.abs(other.x - this.x);
+        int deltaY = Math.abs(other.y - this.y);
+
+        return deltaY <= minimumTouchingDistance && deltaX <= minimumTouchingDistance;
     }
 
     public abstract void step();

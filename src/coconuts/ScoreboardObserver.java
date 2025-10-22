@@ -4,7 +4,7 @@ public class ScoreboardObserver extends AbstractObserver{
 
     @Override
     public void update() {
-        Scoreboard.update(getBeachedCoconuts(),getDestroyedCoconuts());
+        Scoreboard.update(getBeachedCoconuts(),getDestroyedCoconuts(),getHealth());
     }
 
     private int getBeachedCoconuts(){
@@ -13,5 +13,8 @@ public class ScoreboardObserver extends AbstractObserver{
 
     private int getDestroyedCoconuts(){
         return ScoreboardData.getDestroyedCoconuts();
+    }
+    private int getHealth(){
+        return ScoreboardData.getHealth();
     }
 }
